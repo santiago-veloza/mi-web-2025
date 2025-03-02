@@ -1,0 +1,89 @@
+/* Fondo de pantalla */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('img/fondo.jpg') no-repeat center center/cover;
+    margin: 0;
+    flex-direction: column; /* Para mantener el diseño vertical */
+}
+
+/* Contenedor central */
+.container {
+    background: rgba(0, 0, 0, 0.8); /* Mayor opacidad para mejor legibilidad */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 320px;
+    color: white;
+}
+
+/* Ajuste para subir el botón de opciones */
+.menu-container {
+    margin-top: -90px; /* Subir el botón de menú */
+}
+
+/* Estilo del logo */
+.logo {
+    width: 130px;
+    margin-bottom: 10px;
+}
+
+/* Inputs */
+input {
+    width: 80%;
+    padding: 8px;
+    margin: 6px 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Cambio de color al escribir */
+input:focus {
+    border-color: #007bff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Botón */
+button {
+    width: 50%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+    margin-top: -5px; /* Subir el botón */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Links */
+p a {
+    color: #00aaff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Ajuste para mejor usabilidad en dispositivos pequeños */
+@media screen and (max-width: 400px) {
+    .container {
+        width: 90%;
+    }
+}
