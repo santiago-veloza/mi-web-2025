@@ -1,3 +1,5 @@
+/*styles.css*/
+
 /* Fondo de pantalla */
 body {
     font-family: Arial, sans-serif;
@@ -7,23 +9,38 @@ body {
     height: 100vh;
     background: url('img/fondo.jpg') no-repeat center center/cover;
     margin: 0;
-    flex-direction: column; /* Para mantener el diseño vertical */
+    flex-direction: column; /* Mantiene el diseño vertical */
 }
 
-/* Contenedor central */
+/* Contenedor principal */
 .container {
-    background: rgba(0, 0, 0, 0.8); /* Mayor opacidad para mejor legibilidad */
+    background: rgba(0, 0, 0, 0.85); /* Opacidad mejorada */
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
     text-align: center;
-    width: 320px;
+    width: 350px;
     color: white;
+}
+
+/* Barra de navegación */
+.navbar {
+    background: rgba(0, 0, 0, 0.7) !important; /* Fondo oscuro semi-transparente */
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* Color del texto en la navbar */
+.navbar a {
+    color: white !important;
 }
 
 /* Ajuste para subir el botón de opciones */
 .menu-container {
-    margin-top: -90px; /* Subir el botón de menú */
+    margin-top: -10px; /* Subir el botón de menú */
 }
 
 /* Estilo del logo */
@@ -79,6 +96,20 @@ p a {
 
 p a:hover {
     text-decoration: underline;
+}
+
+/* Estilo del menú desplegable */
+.dropdown-menu {
+    background: rgba(0, 0, 0, 0.85); /* Fondo oscuro para mayor contraste */
+    border: none;
+}
+
+.dropdown-item {
+    color: white !important;
+}
+
+.dropdown-item:hover {
+    background: #007bff;
 }
 
 /* Ajuste para mejor usabilidad en dispositivos pequeños */

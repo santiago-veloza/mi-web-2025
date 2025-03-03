@@ -1,3 +1,4 @@
+//script.js
 // Función para registrar un usuario
 function registrar() {
     let email = document.getElementById("registroEmail").value;
