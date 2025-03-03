@@ -1,5 +1,4 @@
 /*styles.css*/
-
 /* Fondo de pantalla */
 body {
     font-family: Arial, sans-serif;
@@ -51,7 +50,7 @@ body {
 
 /* Inputs */
 input {
-    width: 80%;
+    width: 100%;
     padding: 8px;
     margin: 6px 0;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -70,7 +69,7 @@ input:focus {
 
 /* Botón */
 button {
-    width: 50%;
+    width: 100%;
     padding: 12px;
     background-color: #007bff;
     color: white;
@@ -80,7 +79,7 @@ button {
     font-size: 16px;
     font-weight: bold;
     transition: background 0.3s ease-in-out;
-    margin-top: -5px; /* Subir el botón */
+    margin-top: 10px;
 }
 
 button:hover {
@@ -112,9 +111,29 @@ p a:hover {
     background: #007bff;
 }
 
+/* MODAL */
+.modal-content {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-body input {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 /* Ajuste para mejor usabilidad en dispositivos pequeños */
 @media screen and (max-width: 400px) {
     .container {
+        width: 90%;
+    }
+    .modal-dialog {
         width: 90%;
     }
 }

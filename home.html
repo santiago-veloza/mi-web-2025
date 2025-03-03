@@ -29,6 +29,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Inicio</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#crearEventoModal">Crear Evento</a></li>
                                 <li><a class="dropdown-item" href="#">Configuraciones</a></li>
                                 <li><a class="dropdown-item" href="#">Ayuda</a></li>
                             </ul>
@@ -46,7 +47,38 @@
                 </div>
             </div>
         </nav>
-
+<!-- MODAL PARA CREAR EVENTO -->
+<div class="modal fade" id="crearEventoModal" tabindex="-1" aria-labelledby="crearEventoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearEventoLabel">Crear Nuevo Evento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="eventoForm">
+                    <div class="mb-3">
+                        <label for="nombreEvento" class="form-label">Nombre del Evento</label>
+                        <input type="text" class="form-control" id="nombreEvento" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fechaEvento" class="form-label">Fecha del Evento</label>
+                        <input type="date" class="form-control" id="fechaEvento" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidadTiquetes" class="form-label">Cantidad de Tiquetes</label>
+                        <input type="number" class="form-control" id="cantidadTiquetes" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="precioTiquete" class="form-label">Precio por Tiquete</label>
+                        <input type="number" class="form-control" id="precioTiquete" min="0" step="0.01" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Evento</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- Botón para cerrar sesión -->
         <div class="text-center mt-4">
             <button class="btn btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>
