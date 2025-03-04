@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('img/fondo.jpg') no-repeat center center/cover;
+    background: url('../img/fondo.jpg') no-repeat center center/cover;
     margin: 0;
     flex-direction: column; /* Mantiene el diseño vertical */
 }
