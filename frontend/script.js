@@ -31,7 +31,7 @@ function login() {
     if (email === usuario.email && password === usuario.password) {
         document.getElementById("mensaje").innerText = "Inicio de sesión exitoso. Redirigiendo...";
 
-        // Guardar la sesión
+
         localStorage.setItem("sesion", "activa");
 
         setTimeout(() => {
@@ -60,11 +60,9 @@ if (window.location.pathname.includes("home.html")) {
     verificarSesion();
 }
 
-// Función para guardar evento en la base de datos
 document.getElementById("eventoForm").addEventListener("submit", async function(event) {
-    event.preventDefault();  // Evita que la página se recargue
+    event.preventDefault();  
 
-    // Capturar los valores del formulario
     const nombre = document.getElementById("nombreEvento").value;
     const fecha = document.getElementById("fechaEvento").value;
     const tiquetes = document.getElementById("cantidadTiquetes").value;
@@ -86,10 +84,10 @@ document.getElementById("eventoForm").addEventListener("submit", async function(
 
         const resultado = await respuesta.json();
 
-        // Mostrar mensaje de éxito o error
+
         alert(resultado.mensaje || resultado.error);
 
-        // Cerrar el modal y limpiar el formulario si se guardó correctamente
+        
         if (respuesta.ok) {
             document.getElementById("eventoForm").reset();
             var modal = bootstrap.Modal.getInstance(document.getElementById("crearEventoModal"));

@@ -4,17 +4,17 @@ from flask_cors import CORS
 import mariadb
 
 app = Flask(__name__)
-CORS(app)  # Permite recibir peticiones desde el frontend
+CORS(app) 
 
-# Configuración de MariaDB
+
 config = {
     "host": "localhost",
-    "user": "root",       # Reemplázalo con tu usuario real de MariaDB
-    "password": "ucc2025", # Reemplázalo con tu contraseña real
+    "user": "root",       
+    "password": "ucc2025", 
     "database": "eventosagg"
 }
 
-# Ruta para agregar eventos
+
 @app.route("/agregar_evento", methods=["POST"])
 def agregar_evento():
     try:
@@ -37,6 +37,6 @@ def agregar_evento():
     except mariadb.Error as e:
         return jsonify({"error": f"❌ Error al guardar evento: {e}"}), 500
 
-# Iniciar el servidor
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
