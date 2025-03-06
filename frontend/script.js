@@ -1,4 +1,4 @@
-// Función para registrar un usuario
+// script.js
 function registrar() {
     let email = document.getElementById("registroEmail").value;
     let password = document.getElementById("registroPassword").value;
@@ -8,7 +8,7 @@ function registrar() {
         return;
     }
 
-    // Guardar usuario en localStorage
+    
     localStorage.setItem("usuario", JSON.stringify({ email, password }));
     document.getElementById("mensajeRegistro").innerText = "Registro exitoso. Redirigiendo...";
 
@@ -17,7 +17,7 @@ function registrar() {
     }, 1000);
 }
 
-// Función para iniciar sesión
+
 function login() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
@@ -31,7 +31,7 @@ function login() {
     if (email === usuario.email && password === usuario.password) {
         document.getElementById("mensaje").innerText = "Inicio de sesión exitoso. Redirigiendo...";
 
-        // Guardar sesión iniciada
+        // Guardar la sesión
         localStorage.setItem("sesion", "activa");
 
         setTimeout(() => {
@@ -42,20 +42,20 @@ function login() {
     }
 }
 
-// Función para verificar si hay sesión iniciada
+
 function verificarSesion() {
     if (!localStorage.getItem("sesion")) {
         window.location.href = "index.html";
     }
 }
 
-// Función para cerrar sesión
+
 function cerrarSesion() {
     localStorage.removeItem("sesion");
     window.location.href = "index.html";
 }
 
-// Verificar si el usuario está en home.html y no tiene sesión
+
 if (window.location.pathname.includes("home.html")) {
     verificarSesion();
 }
