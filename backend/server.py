@@ -89,6 +89,59 @@ def agregar_evento():
     except mariadb.Error as e:
         return jsonify({"error": f"❌ Error al guardar evento: {e}"}), 500
     
+# Obtener eventos
+@app.route("/eventos", methods=["GET"])
+def obtener_eventos():
+    try:
+        conexion = mariadb.connect(**config)
+        cursor = conexion.cursor(dictionary=True)  # Para obtener resultados como diccionarios
+
+        cursor.execute("SELECT * FROM eventos")
+        eventos = cursor.fetchall()  # Obtener todos los eventos desde la BD
+
+        cursor.close()
+        conexion.close()
+
+        return jsonify(eventos), 200
+
+    except mariadb.Error as e:
+        return jsonify({"error": f"❌ Error al obtener eventos: {e}"}), 500
+
+# Comprar un boleto
+@app.route("/comprar_boleto", methods=["POST"])
+def comprar_boleto():
+    try:
+        datos = request.json
+        id_evento = datos.get("id")
+
+        conexion = mariadb.connect(**config)
+        cursor = conexion.cursor()
+
+        # Obtener el número de boletos disponibles
+        cursor.execute("SELECT tiquetes FROM eventos WHERE id = ?", (id_evento,))
+        resultado = cursor.fetchone()
+
+        if not resultado:
+            return jsonify({"mensaje": "Evento no encontrado"}), 404
+
+        tiquetes_disponibles = resultado[0]
+
+        if tiquetes_disponibles > 0:
+            # Restar un boleto y actualizar la base de datos
+            cursor.execute("UPDATE eventos SET tiquetes = tiquetes - 1 WHERE id = ?", (id_evento,))
+            conexion.commit()
+            cursor.close()
+            conexion.close()
+            return jsonify({"mensaje": "Compra realizada con éxito"}), 200
+        else:
+            cursor.close()
+            conexion.close()
+            return jsonify({"mensaje": "No hay más boletos disponibles"}), 400
+
+    except mariadb.Error as e:
+        return jsonify({"error": f"❌ Error en la compra de boletos: {e}"}), 500
+
+
 
 
 if __name__ == "__main__":
