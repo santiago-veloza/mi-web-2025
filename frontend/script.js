@@ -1,10 +1,13 @@
+// script.js
+
 // Función para registrar usuario en la base de datos
 async function registrar() {
-    let email = document.getElementById("registroEmail").value.trim();
-    let password = document.getElementById("registroPassword").value.trim();
+    let email = document.getElementById("registroEmail")?.value.trim();
+    let password = document.getElementById("registroPassword")?.value.trim();
+    let mensajeRegistro = document.getElementById("mensajeRegistro");
 
     if (!email || !password) {
-        document.getElementById("mensajeRegistro").innerText = "Todos los campos son obligatorios.";
+        if (mensajeRegistro) mensajeRegistro.innerText = "Todos los campos son obligatorios.";
         return;
     }
 
@@ -16,7 +19,7 @@ async function registrar() {
         });
 
         let resultado = await respuesta.json();
-        document.getElementById("mensajeRegistro").innerText = resultado.mensaje;
+        if (mensajeRegistro) mensajeRegistro.innerText = resultado.mensaje;
 
         if (respuesta.ok) {
             setTimeout(() => window.location.href = "index.html", 2000);
@@ -28,11 +31,12 @@ async function registrar() {
 
 // Función para iniciar sesión
 async function login() {
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value.trim();
+    let email = document.getElementById("email")?.value.trim();
+    let password = document.getElementById("password")?.value.trim();
+    let mensaje = document.getElementById("mensaje");
 
     if (!email || !password) {
-        document.getElementById("mensaje").innerText = "Todos los campos son obligatorios.";
+        if (mensaje) mensaje.innerText = "Todos los campos son obligatorios.";
         return;
     }
 
@@ -44,7 +48,7 @@ async function login() {
         });
 
         let resultado = await respuesta.json();
-        document.getElementById("mensaje").innerText = resultado.mensaje;
+        if (mensaje) mensaje.innerText = resultado.mensaje;
 
         if (respuesta.ok) {
             setTimeout(() => window.location.href = "home.html", 2000);
@@ -63,12 +67,13 @@ function cerrarSesion() {
 document.getElementById("eventoForm")?.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    let nombre = document.getElementById("nombreEvento").value.trim();
-    let fecha = document.getElementById("fechaEvento").value;
-    let tiquetes = parseInt(document.getElementById("cantidadTiquetes").value);
-    let precio = parseFloat(document.getElementById("precioTiquete").value);
+    let nombre = document.getElementById("nombreEvento")?.value.trim();
+    let fecha = document.getElementById("fechaEvento")?.value;
+    let tiquetes = parseInt(document.getElementById("cantidadTiquetes")?.value);
+    let precio = parseFloat(document.getElementById("precioTiquete")?.value);
+    let hora = document.getElementById("hora")?.value;
 
-    if (!nombre || !fecha || isNaN(tiquetes) || isNaN(precio) || tiquetes <= 0 || precio <= 0) {
+    if (!nombre || !fecha || !hora || isNaN(tiquetes) || isNaN(precio) || tiquetes <= 0 || precio <= 0) {
         alert("Por favor, ingrese valores válidos.");
         return;
     }
@@ -77,7 +82,7 @@ document.getElementById("eventoForm")?.addEventListener("submit", async function
         let respuesta = await fetch("http://localhost:5000/agregar_evento", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nombre, fecha, tiquetes, precio })
+            body: JSON.stringify({ nombre, fecha, tiquetes, precio, hora })
         });
 
         let resultado = await respuesta.json();
@@ -90,7 +95,7 @@ document.getElementById("eventoForm")?.addEventListener("submit", async function
                 let modalInstance = bootstrap.Modal.getInstance(modal);
                 modalInstance?.hide();
             }
-            cargarEventos();
+            cargarEventos(); // Recargar la lista de eventos
         }
     } catch (error) {
         console.error("Error al agregar evento:", error);
@@ -101,15 +106,13 @@ document.getElementById("eventoForm")?.addEventListener("submit", async function
 async function cargarEventos() {
     try {
         let respuesta = await fetch("http://localhost:5000/eventos");
-
         if (!respuesta.ok) throw new Error("Error al obtener eventos");
 
         let eventos = await respuesta.json();
         let container = document.getElementById("eventosContainer");
-
         if (!container) return;
 
-        container.innerHTML = "";  // Limpiar contenido antes de recargar
+        container.innerHTML = "";
 
         if (eventos.length === 0) {
             container.innerHTML = "<p>No hay eventos disponibles.</p>";
@@ -119,17 +122,16 @@ async function cargarEventos() {
         eventos.forEach(evento => {
             let eventoDiv = document.createElement("div");
             eventoDiv.classList.add("evento");
-
             eventoDiv.innerHTML = `
                 <h3>${evento.nombre}</h3>
                 <p><strong>Fecha:</strong> ${evento.fecha}</p>
+                <p><strong>Hora:</strong> ${evento.hora || "No especificada"}</p>
                 <p><strong>Boletos disponibles:</strong> <span id="boletos-${evento.id}">${evento.tiquetes}</span></p>
                 <p><strong>Precio:</strong> $${Number(evento.precio).toFixed(2)}</p>
                 <button onclick="comprarBoleto(${evento.id})" ${evento.tiquetes <= 0 ? "disabled" : ""}>
                     ${evento.tiquetes > 0 ? "Comprar" : "Agotado"}
                 </button>
             `;
-
             container.appendChild(eventoDiv);
         });
     } catch (error) {
@@ -150,7 +152,7 @@ async function comprarBoleto(idEvento) {
         alert(resultado.mensaje);
 
         if (respuesta.ok) {
-            cargarEventos();  // Recargar eventos para actualizar la cantidad de boletos
+            cargarEventos();
         }
     } catch (error) {
         console.error("Error al comprar boleto:", error);
@@ -158,6 +160,8 @@ async function comprarBoleto(idEvento) {
 }
 
 // Cargar eventos si estamos en la página de eventos
-if (window.location.pathname.includes("eventos.html")) {
-    document.addEventListener("DOMContentLoaded", cargarEventos);
-}
+document.addEventListener("DOMContentLoaded", function() {
+    if (document.getElementById("eventosContainer")) {
+        cargarEventos();
+    }
+});
